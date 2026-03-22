@@ -19,7 +19,7 @@
 将数千行对话记录转化为简洁、可搜索的摘要 — 完全离线运行，无需 API 密钥。
 
 <p align="center">
-  <video src="https://github.com/user-attachments/assets/view-me.mp4" width="700" controls></video>
+  <video src="https://github.com/user-attachments/assets/15970642-2674-4497-9e8d-eb18d3c60c64" width="700" controls></video>
 </p>
 
 ## 功能

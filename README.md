@@ -19,7 +19,7 @@
 Turn thousands of lines of conversation transcripts into concise, searchable summaries — entirely offline, no API keys needed.
 
 <p align="center">
-  <video src="https://github.com/user-attachments/assets/view-me.mp4" width="700" controls></video>
+  <video src="https://github.com/user-attachments/assets/15970642-2674-4497-9e8d-eb18d3c60c64" width="700" controls></video>
 </p>
 
 ## What it does

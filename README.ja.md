@@ -19,7 +19,7 @@
 数千行の会話トランスクリプトを、簡潔で検索可能な要約に変換 — 完全オフライン、API キー不要。
 
 <p align="center">
-  <video src="https://github.com/user-attachments/assets/view-me.mp4" width="700" controls></video>
+  <video src="https://github.com/user-attachments/assets/15970642-2674-4497-9e8d-eb18d3c60c64" width="700" controls></video>
 </p>
 
 ## 機能
