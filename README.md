@@ -170,34 +170,35 @@ cp .env.example .env
 
 **MongoDB** (opt-in) — install with `pip install cc-digest[mongo]`, set `STORAGE_BACKEND=mongo` and `MONGO_URI` in `.env`.
 
+## Performance
+
+8 models benchmarked on Apple Silicon M4 Pro — 30 sessions, 67K words input:
+
+| Model | Params | Avg/session | Compression | Notes |
+|---|---|---|---|---|
+| **`qwen3:14b`** | 14B | ~36s | 15:1 | **Default** — best accuracy, respects conversation language |
+| `glm4:9b` | 9B | ~20s | 18:1 | Fastest reliable option |
+| `mistral-nemo` | 12B | ~27s | 14:1 | Solid all-rounder |
+| `gemma3:12b` | 12B | ~34s | 10:1 | More detailed output |
+| `granite3.3:8b` | 8B | ~26s | 11:1 | Good balance speed/quality |
+
+> `qwen3:14b` for accuracy. `glm4:9b` or `granite3.3:8b` for faster runs. Embedding + search is instant (<1s).
+
 <details>
-<summary><strong>Performance benchmarks</strong> — 8 models tested on Apple Silicon M4 Pro</summary>
+<summary>Full benchmark details (3 more models + quality analysis)</summary>
 
-### Benchmarks
-
-30 sessions, 67K words input:
-
-| Model | Params | Avg/session | Total (30 sessions) | Compression | Errors | Notes |
-|---|---|---|---|---|---|---|
-| `qwen3:14b` | 14B | ~36s | ~18 min | 15:1 | 0 | Concise, structured. **Default** |
-| `glm4:9b` | 9B | ~20s | ~10 min | 18:1 | 0 | Fast, high compression |
-| `mistral-nemo` | 12B | ~27s | ~14 min | 14:1 | 0 | Solid all-rounder |
-| `gemma3:12b` | 12B | ~34s | ~17 min | 10:1 | 0 | More detailed output |
-| `qwen3.5:9b` | 9B | ~32s | ~16 min | 10:1 | 0 | Slower than expected for its size |
-| `granite3.3:8b` | 8B | ~26s | ~13 min | 11:1 | 0 | Good balance speed/quality |
-| `phi4-mini` | 3.8B | ~10s | ~5 min | 12:1 | 0 | Fastest, but lower factual accuracy |
-| `nemotron-mini` | 4.2B | ~4s | ~2 min | 550:1 | 8/30 | Not recommended — frequent empty responses |
+| Model | Params | Avg/session | Compression | Notes |
+|---|---|---|---|---|
+| `qwen3.5:9b` | 9B | ~32s | 10:1 | Slower than expected for its size |
+| `phi4-mini` | 3.8B | ~10s | 12:1 | Fastest, but introduced factual errors |
+| `nemotron-mini` | 4.2B | ~4s | 550:1 | Not recommended — 8/30 empty responses |
 
 **Quality comparison** (3-session side-by-side):
 - `qwen3:14b`: best factual accuracy, structured bullets, respects conversation language
-- `phi4-mini`: 3.4x faster but introduced factual errors (e.g., inverted a decision in one session)
+- `phi4-mini`: 3.4x faster but inverted a decision in one session
 - `granite3.3:8b`: solid middle ground between speed and quality
 
-**Recommendation**: `qwen3:14b` for accuracy, `glm4:9b` or `granite3.3:8b` if you need faster runs without sacrificing reliability.
-
-- Embedding (`nomic-embed-text`): 30 sessions in seconds
-- Semantic search: instant (<1s per query)
-- Session condensation: smart head/tail strategy — keeps context from beginning and end, compresses the middle. Handles sessions from 1K to 1M+ characters
+Session condensation uses a smart head/tail strategy — keeps context from beginning and end, compresses the middle. Handles sessions from 1K to 1M+ characters.
 
 > Times vary with session length and hardware. GPU acceleration recommended.
 
