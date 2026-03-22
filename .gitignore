@@ -1,0 +1,34 @@
+# Data (personal sessions)
+sessions/
+sessions-digest/
+*.db
+
+# Environment
+.env
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Tool caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Internal docs (not for public repo)
+INTERNAL.md

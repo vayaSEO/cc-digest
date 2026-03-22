@@ -1,0 +1,54 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "cc-digest"
+version = "0.1.0"
+description = "Extract, digest and search your Claude Code sessions with local LLMs"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+authors = [
+    { name = "David Sitjes" },
+]
+keywords = ["claude-code", "sessions", "digest", "embeddings", "ollama"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Console",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Software Development :: Documentation",
+]
+dependencies = [
+    "typer>=0.15",
+    "rich>=13.0",
+    "python-dotenv>=1.0",
+    "httpx>=0.27",
+]
+
+[project.optional-dependencies]
+mongo = ["pymongo>=4.6"]
+all = ["pymongo>=4.6"]
+dev = ["ruff", "pytest"]
+
+[project.scripts]
+cc-digest = "cc_digest.cli:app"
+
+[project.urls]
+Repository = "https://github.com/vayaSEO/cc-digest"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/cc_digest"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-v --tb=short"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
