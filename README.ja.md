@@ -55,6 +55,17 @@ pip install cc-digest[mongo]
 
 </details>
 
+<details>
+<summary>オプション：MCP サーバー（Claude Code 連携）</summary>
+
+```bash
+pip install cc-digest[mcp]
+```
+
+`cc-digest serve` コマンドが有効になり、Claude Code が過去のセッションを検索できる MCP サーバーを起動します。
+
+</details>
+
 ## クイックスタート
 
 ```bash
@@ -140,6 +151,40 @@ cc-digest search "pipeline" --top 10     # より多くの結果
 cc-digest stats
 cc-digest stats --project myapp
 ```
+
+### `cc-digest serve`
+
+MCP サーバーを起動して、Claude Code からセッションを検索できるようにします。
+
+```bash
+pip install cc-digest[mcp]
+cc-digest serve
+```
+
+#### Claude Code の設定
+
+プロジェクトの `.mcp.json` または `~/.claude/settings.json` に追加：
+
+```json
+{
+  "mcpServers": {
+    "cc-digest": {
+      "command": "cc-digest",
+      "args": ["serve"]
+    }
+  }
+}
+```
+
+設定後、Claude Code は3つのツールを使用できます：
+
+| ツール | 説明 |
+|---|---|
+| `search_sessions` | 過去のセッションをセマンティックまたはテキスト検索 |
+| `list_sessions` | フィルターとページネーションでセッション一覧を表示 |
+| `session_stats` | セッション履歴の統計情報を取得 |
+
+MCP サーバーは**読み取り専用**です — セッションデータを変更しません。セマンティック検索には Ollama が必要です。利用できない場合は自動的にテキストマッチングにフォールバックします。
 
 ## 設定
 

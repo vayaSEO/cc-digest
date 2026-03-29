@@ -32,7 +32,8 @@ dependencies = [
 
 [project.optional-dependencies]
 mongo = ["pymongo>=4.6"]
-all = ["pymongo>=4.6"]
+mcp = ["fastmcp>=2.0"]
+all = ["pymongo>=4.6", "fastmcp>=2.0"]
 dev = ["ruff", "pytest"]
 
 [project.scripts]

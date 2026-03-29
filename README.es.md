@@ -55,6 +55,17 @@ Configura `STORAGE_BACKEND=mongo` y `MONGO_URI` en tu fichero `.env`.
 
 </details>
 
+<details>
+<summary>Opcional: servidor MCP (integración con Claude Code)</summary>
+
+```bash
+pip install cc-digest[mcp]
+```
+
+Habilita el comando `cc-digest serve`, que ejecuta un servidor MCP para que Claude Code pueda buscar en tus sesiones anteriores.
+
+</details>
+
 ## Inicio rápido
 
 ```bash
@@ -140,6 +151,40 @@ Resumen de tus datos de sesión.
 cc-digest stats
 cc-digest stats --project myapp
 ```
+
+### `cc-digest serve`
+
+Inicia un servidor MCP para que Claude Code pueda buscar en tus sesiones.
+
+```bash
+pip install cc-digest[mcp]
+cc-digest serve
+```
+
+#### Configuración en Claude Code
+
+Añade a tu `.mcp.json` del proyecto o a `~/.claude/settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "cc-digest": {
+      "command": "cc-digest",
+      "args": ["serve"]
+    }
+  }
+}
+```
+
+Una vez configurado, Claude Code obtiene tres herramientas:
+
+| Herramienta | Descripción |
+|---|---|
+| `search_sessions` | Búsqueda semántica o textual en sesiones anteriores |
+| `list_sessions` | Listar sesiones con filtros y paginación |
+| `session_stats` | Estadísticas sobre tu historial de sesiones |
+
+El servidor MCP es **solo lectura** — nunca modifica tus datos. La búsqueda semántica requiere Ollama; si no está disponible, usa búsqueda textual automáticamente.
 
 ## Configuración
 

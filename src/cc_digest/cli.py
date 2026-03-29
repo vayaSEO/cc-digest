@@ -30,5 +30,34 @@ def main(
     pass
 
 
+@app.command()
+def serve(
+    transport: str = typer.Option("stdio", "--transport", "-t", help="MCP transport: stdio"),
+):
+    """Start the MCP server for Claude Code integration.
+
+    Requires: pip install cc-digest[mcp]
+    """
+    try:
+        from cc_digest.mcp_server import create_server
+    except ImportError:
+        console.print(
+            "[red]FastMCP is required.[/red] Install with: "
+            "[bold]pip install cc-digest\\[mcp][/bold]"
+        )
+        raise typer.Exit(1)
+
+    import logging
+    import sys
+
+    handler = logging.StreamHandler(sys.stderr)
+    handler.setFormatter(logging.Formatter("[%(levelname)s] %(name)s: %(message)s"))
+    logging.getLogger("cc_digest").addHandler(handler)
+    logging.getLogger("cc_digest").setLevel(logging.INFO)
+
+    server = create_server()
+    server.run(transport=transport)
+
+
 # Import subcommands — each registers itself on the app
 from cc_digest.commands import extract, digest, search, stats  # noqa: E402, F401

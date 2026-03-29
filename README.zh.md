@@ -55,6 +55,17 @@ pip install cc-digest[mongo]
 
 </details>
 
+<details>
+<summary>可选：MCP 服务器（Claude Code 集成）</summary>
+
+```bash
+pip install cc-digest[mcp]
+```
+
+启用 `cc-digest serve` 命令，运行 MCP 服务器，让 Claude Code 可以搜索你的历史会话。
+
+</details>
+
 ## 快速开始
 
 ```bash
@@ -140,6 +151,40 @@ cc-digest search "pipeline" --top 10     # 更多结果
 cc-digest stats
 cc-digest stats --project myapp
 ```
+
+### `cc-digest serve`
+
+启动 MCP 服务器，让 Claude Code 可以搜索你的会话。
+
+```bash
+pip install cc-digest[mcp]
+cc-digest serve
+```
+
+#### Claude Code 配置
+
+添加到项目的 `.mcp.json` 或 `~/.claude/settings.json`：
+
+```json
+{
+  "mcpServers": {
+    "cc-digest": {
+      "command": "cc-digest",
+      "args": ["serve"]
+    }
+  }
+}
+```
+
+配置完成后，Claude Code 将获得三个工具：
+
+| 工具 | 描述 |
+|---|---|
+| `search_sessions` | 语义或文本搜索历史会话 |
+| `list_sessions` | 列出会话，支持过滤和分页 |
+| `session_stats` | 查看会话历史统计信息 |
+
+MCP 服务器是**只读的** — 不会修改你的会话数据。语义搜索需要 Ollama 运行；如果不可用，会自动回退到文本匹配。
 
 ## 配置
 
