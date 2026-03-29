@@ -32,9 +32,7 @@ def _grep_search(store, query: str, top_k: int, project: str | None) -> list[dic
     if len(scored) < top_k:
         no_digest = store.list_sessions(project=project, has_digest=False)
         for s in no_digest:
-            msg_text = " ".join(
-                m.get("content", "")[:200] for m in s.get("messages", [])[:5]
-            )
+            msg_text = " ".join(m.get("content", "")[:200] for m in s.get("messages", [])[:5])
             search_text = f"{s.get('title', '')} {msg_text}".lower()
             hits = sum(1 for p in patterns if p.search(search_text))
             if hits > 0:
@@ -105,7 +103,10 @@ def _do_list(project: str | None, limit: int, offset: int, has_digest: bool | No
     store = get_backend(cfg)
     try:
         sessions = store.list_sessions(
-            project=project, limit=limit, offset=offset, has_digest=has_digest,
+            project=project,
+            limit=limit,
+            offset=offset,
+            has_digest=has_digest,
         )
         total = store.count_sessions(project=project)
         return {
@@ -128,7 +129,10 @@ def _do_stats(project: str | None) -> dict:
     try:
         sessions = store.list_sessions(project=project)
         if not sessions:
-            return {"total_sessions": 0, "message": "No sessions found. Run cc-digest extract first."}
+            return {
+                "total_sessions": 0,
+                "message": "No sessions found. Run cc-digest extract first.",
+            }
 
         projects: dict[str, int] = {}
         total_messages = 0
@@ -171,8 +175,7 @@ def create_server():
         from fastmcp import FastMCP
     except ImportError:
         print(
-            "FastMCP is required for the MCP server.\n"
-            "Install with: pip install cc-digest[mcp]",
+            "FastMCP is required for the MCP server.\nInstall with: pip install cc-digest[mcp]",
             file=sys.stderr,
         )
         sys.exit(1)
